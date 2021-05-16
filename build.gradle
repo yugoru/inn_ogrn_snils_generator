@@ -1,0 +1,37 @@
+plugins {
+    id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+def selenideVersion = "5.19.0",
+    junitVersion = "5.7.1"
+
+dependencies {
+    testImplementation (
+            "com.codeborne:selenide:$selenideVersion",
+            "org.junit.jupiter:junit-jupiter-api:$junitVersion")
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+task one_test(type: Test) {
+    useJUnitPlatform {
+        includeTags 'one'
+    }
+}
+
+task without_one_test(type: Test) {
+    useJUnitPlatform {
+        excludeTags 'one'
+    }
+}
